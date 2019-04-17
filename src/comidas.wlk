@@ -1,5 +1,5 @@
 object manzana {
-	method image() = "manzana.png"
+	method image() = "manzanaFondoAlfa.png"
 	
 	method energia() = 80
 }
