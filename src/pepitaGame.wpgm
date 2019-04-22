@@ -21,13 +21,33 @@ program PepitaGame {
 //	TECLADO
 	keyboard.h().onPressDo { game.say(pepita, "Hola chiques!") }
 
-	keyboard.v().onPressDo { pepita.volaHacia(villaGesell) }
-	keyboard.b().onPressDo { pepita.volaHacia(buenosAires) }
+	keyboard.v().onPressDo { if (not (pepita.ciudad() == villaGesell)) {
+								if (pepita.energia() >= pepita.energiaParaVolar(pepita.position().distance(villaGesell.position())))  
+									pepita.volaHacia(villaGesell)
+									else game.say(pepita, "Dame de comer primero!") 
+								}
+		else {game.say(pepita, "Ya estoy en " + pepita.ciudad().nombre() + "!")}
+	}
+		
+	keyboard.b().onPressDo { if (not (pepita.ciudad() == buenosAires)) {
+								if (pepita.energia() >= pepita.energiaParaVolar(pepita.position().distance(buenosAires.position())))  
+									pepita.volaHacia(buenosAires)
+									else game.say(pepita, "Dame de comer primero!") 
+								}
+							 else game.say(pepita, "Ya estoy en " + pepita.ciudad().nombre() + "!") 
+	}
 
 	keyboard.up().onPressDo { pepita.move(pepita.position().up(1)) }
 	keyboard.down().onPressDo { pepita.move(pepita.position().down(1)) }
 	keyboard.left().onPressDo { pepita.move(pepita.position().left(1)) }
 	keyboard.right().onPressDo { pepita.move(pepita.position().right(1)) }
+
+	keyboard.m().onPressDo { pepita.move(game.at(5,1))
+							 pepita.come(manzana)
+							 game.removeVisual(manzana)}
+	keyboard.a().onPressDo { pepita.move(game.at(5,5))
+							 pepita.come(alpiste)
+							 game.removeVisual(alpiste)}
 		
 //	START
 	game.start()
