@@ -35,9 +35,14 @@ program PepitaGame {
 	keyboard.down().onPressDo { roque.move(roque.position().down(1)) }
 	keyboard.left().onPressDo { roque.move(roque.position().left(1)) }
 	keyboard.right().onPressDo { roque.move(roque.position().right(1)) }
+	
+	keyboard.w().onPressDo { pepita.move(pepita.position().up(1)) }
+	keyboard.s().onPressDo { pepita.move(pepita.position().down(1)) }
+	keyboard.a().onPressDo { pepita.move(pepita.position().left(1)) }
+	keyboard.d().onPressDo { pepita.move(pepita.position().right(1)) }
 
-	keyboard.m().onPressDo { pepita.volaYCome(manzana) }
-	keyboard.a().onPressDo { pepita.volaYCome(alpiste) }
+	keyboard.r().onPressDo { pepita.volaYCome(manzana) }
+	keyboard.t().onPressDo { pepita.volaYCome(alpiste) }
 
 	keyboard.v().onPressDo { pepita.volaHacia(villaGesell) }
 		
