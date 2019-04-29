@@ -82,7 +82,7 @@ object roque {
 }
 
 object posicionRandom {
-	
+	//Se probó por REPL que funciona. size es una posicion del tipo (x,y)
 	method nuevaPosicion(size) {
 		return game.at(self.nroRandomTruncate(size.x()) , self.nroRandomTruncate(size.y()))
 	}
