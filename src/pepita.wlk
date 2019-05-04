@@ -74,6 +74,13 @@ object roque {
 		}
 	}
 	
+	method tirarComida() {
+		if (miniMochila != vacio) {
+			miniMochila.position(posicionRandom.nuevaPosicion())
+			miniMochila = vacio
+		}
+	}
+	
 	//Esta para conservar polimorfismo en game Pipa y Pepona collision.
 	method saludarAmiga(amiga) {}
 	method move(nuevaPosicion) {
@@ -83,7 +90,11 @@ object roque {
 
 object posicionRandom {
 	//Se probó por REPL que funciona. size es una posicion del tipo (x,y)
-	method nuevaPosicion(size) {
+	var size = game.at(10,10)
+	
+	method newGameSize(newSize) { size = newSize }
+	
+	method nuevaPosicion() {
 		return game.at(self.nroRandomTruncate(size.x()) , self.nroRandomTruncate(size.y()))
 	}
 	
