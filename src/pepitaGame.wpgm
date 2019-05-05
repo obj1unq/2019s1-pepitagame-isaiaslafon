@@ -26,18 +26,31 @@ program PepitaGame {
 	
 
 // COLISIONES
+	//De 1ra parte!
 	//game.whenCollideDo(pepona, { golondrina => golondrina.saludarAmiga(pepona)})
 	//game.whenCollideDo(pipa, { golondrina => golondrina.saludarAmiga(pipa)})
+	
+	//Segunda parte
 	game.whenCollideDo(manzana, { persona => persona.agarrarComida(manzana)})
 	game.whenCollideDo(alpiste, { persona => persona.agarrarComida(alpiste)})
 
 //	TECLADO
 	keyboard.h().onPressDo { game.say(pepita, "Hola chiques!") }
 
-	keyboard.up().onPressDo { roque.move(roque.position().up(1)) }
-	keyboard.down().onPressDo { roque.move(roque.position().down(1)) }
-	keyboard.left().onPressDo { roque.move(roque.position().left(1)) }
-	keyboard.right().onPressDo { roque.move(roque.position().right(1)) }
+//2da parte, 1ra simplemente reemplaza por pepita
+var player1 = roque
+var player2 = pepita
+	
+	keyboard.up().onPressDo { player1.move(player1.position().up(1)) }
+	keyboard.down().onPressDo { player1.move(player1.position().down(1)) }
+	keyboard.left().onPressDo { player1.move(player1.position().left(1)) }
+	keyboard.right().onPressDo { player1.move(player1.position().right(1)) }
+	
+	keyboard.w().onPressDo { player2.move(player2.position().up(1)) }
+	keyboard.s().onPressDo { player2.move(player2.position().down(1)) }
+	keyboard.a().onPressDo { player2.move(player2.position().left(1)) }
+	keyboard.d().onPressDo { player2.move(player2.position().right(1)) }
+	
 	
 	keyboard.r().onPressDo { pepita.volaYCome(manzana) }
 	keyboard.t().onPressDo { pepita.volaYCome(alpiste) }

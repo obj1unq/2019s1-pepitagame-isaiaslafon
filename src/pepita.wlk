@@ -74,7 +74,9 @@ object roque {
 	
 	method cargarMochila(objeto) {
 		miniMochila = objeto
-		objeto.hide()
+		//objeto.hide()
+		// Se mueve afuera del tablero porque si no deja de funcionar el whenCollideDo
+		objeto.position(game.at(11,11))
 	}
 	
 	method vaciarMochila() {
