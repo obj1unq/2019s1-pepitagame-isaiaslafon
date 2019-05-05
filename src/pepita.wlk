@@ -68,15 +68,19 @@ object roque {
 	method image() = "jugador.png"
 	method nombre() { return "Roque" }
 	method agarrarComida(comida) {
-		if (miniMochila == vacio) {
-			game.removeVisual(comida)
-			self.miniMochila(comida) 
-		}
+		if (miniMochila != vacio) { self.vaciarMochila()}
+			self.cargarMochila(comida) 			
 	}
 	
-	method tirarComida() {
+	method cargarMochila(objeto) {
+		miniMochila = objeto
+		objeto.hide()
+	}
+	
+	method vaciarMochila() {
 		if (miniMochila != vacio) {
 			miniMochila.position(posicionRandom.nuevaPosicion())
+			miniMochila.show()
 			miniMochila = vacio
 		}
 	}
