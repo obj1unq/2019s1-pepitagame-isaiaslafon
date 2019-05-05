@@ -18,9 +18,10 @@ program PepitaGame {
 	//game.addVisual(alpiste)
 	//game.addVisual(manzana)
 	game.addVisual(pepita)
+	
+	//1ra parte
 	//game.addVisual(pepona)
 	//game.addVisual(pipa)
-
 	//game.addVisual(buenosAires)
 	//game.addVisual(villaGesell)
 	
@@ -33,6 +34,7 @@ program PepitaGame {
 	//Segunda parte
 	game.whenCollideDo(manzana, { persona => persona.agarrarComida(manzana)})
 	game.whenCollideDo(alpiste, { persona => persona.agarrarComida(alpiste)})
+	game.whenCollideDo(pepita, { persona => persona.darComida(pepita)})
 
 //	TECLADO
 	keyboard.h().onPressDo { game.say(pepita, "Hola chiques!") }

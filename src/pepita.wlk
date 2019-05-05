@@ -72,6 +72,13 @@ object roque {
 			self.cargarMochila(comida) 			
 	}
 	
+	method darComida(ave) {
+	if (miniMochila != vacio) {
+		ave.come(miniMochila)
+		self.vaciarMochila()
+		}	
+	}
+	 
 	method cargarMochila(objeto) {
 		miniMochila = objeto
 		//objeto.hide()
@@ -82,7 +89,7 @@ object roque {
 	method vaciarMochila() {
 		if (miniMochila != vacio) {
 			miniMochila.position(posicionRandom.nuevaPosicion())
-			miniMochila.show()
+			//miniMochila.show()
 			miniMochila = vacio
 		}
 	}
