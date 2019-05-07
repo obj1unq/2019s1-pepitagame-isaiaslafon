@@ -8,7 +8,7 @@ object pepita {
 	var property ciudad = buenosAires 
 	var property position = game.at(3,3)
 	
-	method cambiarActual(golondrina) { amiga = golondrina}
+	method cambiarAmiga(golondrina) { amiga = golondrina}
 	method esAmiga(golondrina) { return golondrina == amiga}
 	method image() {return if (energia > 100) "pepita-gorda-raw.png" else "pepita.png" }
 	method nombre() { return "Pepita" }
@@ -44,7 +44,9 @@ object pepita {
 		energia -= self.energiaHacia(nuevaPosicion)
 		self.position(nuevaPosicion) 
 		}
-	}	
+	}
+	
+	method agarrarItem(iten) {}	
 }
 
 object pepona {
@@ -65,9 +67,9 @@ object roque {
 	
 	method image() = "jugador.png"
 	method nombre() { return "Roque" }
-	method agarrarComida(comida) {
+	method agarrarItem(item) {
 		if (miniMochila != vacio) { self.vaciarMochila()}
-			self.cargarMochila(comida) 			
+			self.cargarMochila(item) 			
 	}
 	
 	method darComida(ave) {

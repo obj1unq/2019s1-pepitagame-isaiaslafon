@@ -12,24 +12,31 @@ program PepitaGame {
 	game.ground("suelo.png")
 
 //	VISUALES
-	game.addVisualCharacter(roque)
-	game.addVisual(alpiste)
-	game.addVisual(manzana)
-	game.addVisual(pepita)
-	//1ra parte
-	game.addVisual(pepona)
-	game.addVisual(pipa)
+const drawVisuals = {
+//Lugares	
 	game.addVisual(buenosAires)
 	game.addVisual(villaGesell)
+//Items	
+	game.addVisual(alpiste)
+	game.addVisual(manzana)
+//Amigas	
+	game.addVisual(pipa)
+	game.addVisual(pepona)
+//Players	
+	game.addVisual(pepita)
+	game.addVisualCharacter(roque)
+}	
 
+drawVisuals.apply()
+	
 // Dialogos
 const saludar = {player, alguien => game.say(player, "Hola " + alguien.nombre() + "!")}
 const saludarAlColisionar = {saludada => 
 	game.whenCollideDo(saludada, 
-		{ golondrina => if (not golondrina.esAmiga(saludada)) {
-							saludar.apply(golondrina, saludada)
-							golondrina.cambiarAmiga(saludada)
-						}
+		{ golondrina => if (golondrina.esAmiga(saludada)) {} 
+						else {	saludar.apply(golondrina, saludada)
+								golondrina.cambiarAmiga(saludada)
+							}
 		}
 	)
 }
@@ -43,10 +50,13 @@ saludarAlColisionar.apply(pipa)
 
 	
 //Segunda parte
-const agarrarItemLogic = { item => game.whenCollideDo(item, { persona => persona.agarrarComida(item)
-		hideFromView.apply(item)})
-		} 
-		
+const agarrarItemLogic = { item => game.whenCollideDo(item, {persona => if (persona == roque) 
+																		{persona.agarrarItem(item)
+																		hideFromView.apply(item)}
+													
+															} )
+						}
+
 agarrarItemLogic.apply(manzana)
 agarrarItemLogic.apply(alpiste)
 		
@@ -73,22 +83,22 @@ keyboard.right().onPressDo { moveRight.apply(player1) }
 	
 
 keyboard.w().onPressDo { if (player2.canMove(player2.position().up(1))) { moveUp.apply(player2)   } else { dameDeComer.apply(player2)} }
-keyboard.s().onPressDo { if (player2.canMove(player2.position().up(1))) { moveDown.apply(player2) } else { dameDeComer.apply(player2)}  }
-keyboard.a().onPressDo { if (player2.canMove(player2.position().up(1))) { moveLeft.apply(player2) } else { dameDeComer.apply(player2)}  }
-keyboard.d().onPressDo { if (player2.canMove(player2.position().up(1))) { moveRight.apply(player2)} else { dameDeComer.apply(player2)}  }
+keyboard.s().onPressDo { if (player2.canMove(player2.position().down(1))) { moveDown.apply(player2) } else { dameDeComer.apply(player2)}  }
+keyboard.a().onPressDo { if (player2.canMove(player2.position().left(1))) { moveLeft.apply(player2) } else { dameDeComer.apply(player2)}  }
+keyboard.d().onPressDo { if (player2.canMove(player2.position().right(1))) { moveRight.apply(player2)} else { dameDeComer.apply(player2)}  }
 	
 	
-keyboard.r().onPressDo { pepita.volaYCome(manzana)
-						spawn.apply(manzana)
-						agarrarItemLogic.apply(manzana)
+keyboard.r().onPressDo { pepita.volaYCome(manzana) 
+						 spawn.apply(manzana)
+						 agarrarItemLogic.apply(manzana)
 						}
 keyboard.t().onPressDo { pepita.volaYCome(alpiste) 
-						spawn.apply(alpiste)
-						agarrarItemLogic.apply(alpiste)
+						 spawn.apply(alpiste)
+						 agarrarItemLogic.apply(alpiste)
 						}
 						
 keyboard.v().onPressDo { pepita.volaHacia(villaGesell) }
-keyboard.b().onPressDo { pepita.volaHacia(buenosAires)	}
+keyboard.b().onPressDo { pepita.volaHacia(buenosAires) }
 
 
 		
