@@ -1,17 +1,19 @@
 import wollok.game.*
 
-object manzana {
-	var property position = game.at(5,1)
+class Manzana {
+	var property position
 	method image() = "manzanaFondoAlfa.png"
 	method energia() = 80
 }
 
-object alpiste {
-	var property position = game.at(5,5)
+class MontoncitoAlpiste {
+	var property position
+	var cantGranos = 0
+	method ponerGrano() { cantGranos += 1 }
+	method ponerGranos(granos) { cantGranos += granos }
+	//no es necesario aun
+	//method consumir() { cantGranos = 0}
+	
 	method image() = "alpiste.png"
-	method energia() = 5
-}
-
-object vacio {
-	method energia() = 0
+	method energia() = 0.5 * cantGranos
 }
