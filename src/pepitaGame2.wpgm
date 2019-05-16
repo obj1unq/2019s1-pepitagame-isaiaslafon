@@ -1,0 +1,91 @@
+import players.*
+import otrasAves.*
+import ciudades.*
+import comidas2.*
+import wollok.game.*
+import gameObject.*
+
+program PepitaGame {
+	
+//	CONFIG	
+	tablero.configurar(10, 10, "Pepita", "suelo.png")
+
+//Crear objetos y colliders
+
+
+//	VISUALES
+	
+	//Ciudades
+	tablero.addTabVisual(buenosAires)
+	tablero.addTabVisual(villaGesell)
+
+	//Amigas
+	tablero.addTabVisual(pipa)
+	tablero.addTabVisual(pepona)
+
+	//Players
+	tablero.addTabVisual(pepita)
+	tablero.addPlayer(roque)
+	tablero.drawAutoposVisuals()
+
+	//Items	
+	crearMontonDeAlpiste.apply(game.at(5,1),1)
+	crearManzana.apply(game.at(6,4))
+	
+	//Players	
+	game.addVisual(pepita)
+	game.addVisualCharacter(roque)
+
+// Dialogos
+const saludar = {player, alguien => game.say(player, "Hola " + alguien.nombre() + "!")}
+const saludarAlColisionar = {saludada => 
+	game.whenCollideDo(saludada, 
+		{ golondrina => if (golondrina.esAmiga(saludada)) {} 
+						else {	saludar.apply(golondrina, saludada)
+								golondrina.cambiarAmiga(saludada)
+							}
+		}
+	)
+}
+
+
+
+const dameDeComer = {player => game.say(player, "dame de comer, loco!")}
+
+// COLISIONES
+//De 1ra parte!
+saludarAlColisionar.apply(pepona)
+saludarAlColisionar.apply(pipa)
+
+//Segunda parte
+		
+//	TECLADO
+	//keyboard.h().onPressDo { saludarChiques.apply(pepita) }
+
+//2da parte, 1ra simplemente reemplaza por pepita
+const player1 = roque
+const player2 = pepita
+	
+const moveUp = {player => player.move(player.position().up(1))}
+const moveDown = {player => player.move(player.position().down(1))}
+const moveLeft = {player => player.move(player.position().left(1))}
+const moveRight = {player => player.move(player.position().right(1))}
+
+const spawn = {objeto => objeto.position(posicionRandom.nuevaPosicion())}
+
+keyboard.up().onPressDo { moveUp.apply(player1) }
+keyboard.down().onPressDo { moveDown.apply(player1) }
+keyboard.left().onPressDo { moveLeft.apply(player1) }
+keyboard.right().onPressDo { moveRight.apply(player1) }
+	
+keyboard.w().onPressDo { if (player2.canMove(player2.position().up(1))) { moveUp.apply(player2)   } else { dameDeComer.apply(player2)} }
+keyboard.s().onPressDo { if (player2.canMove(player2.position().down(1))) { moveDown.apply(player2) } else { dameDeComer.apply(player2)}  }
+keyboard.a().onPressDo { if (player2.canMove(player2.position().left(1))) { moveLeft.apply(player2) } else { dameDeComer.apply(player2)}  }
+keyboard.d().onPressDo { if (player2.canMove(player2.position().right(1))) { moveRight.apply(player2)} else { dameDeComer.apply(player2)}  }
+	
+keyboard.v().onPressDo { pepita.volaHacia(villaGesell) }
+keyboard.b().onPressDo { pepita.volaHacia(buenosAires) }
+
+//	START
+	game.start()
+}

@@ -3,11 +3,13 @@ import wollok.game.*
 import comidas.*
 
 object pepita {
+	var amiga
 	var property energia = 1000
 	var property ciudad = buenosAires 
 	var property position = game.at(3,3)
-	var property amiga = pepona
 	
+	method cambiarAmiga(golondrina) { amiga = golondrina}
+	method esAmiga(golondrina) { return golondrina == amiga}
 	method image() {return if (energia > 100) "pepita-gorda-raw.png" else "pepita.png" }
 	method nombre() { return "Pepita" }
 	
@@ -28,25 +30,23 @@ object pepita {
 	method volaYCome(comida) {
 		self.move(comida.position())
 		self.come(comida)
-		game.removeVisual(comida)
 	}
 
 	method energiaParaVolar(distancia) = 15 + 5 * distancia
 	
 	method energiaHacia(posicion) { return self.energiaParaVolar(position.distance(posicion)) }
 	
-	method saludarAmiga(golondrina) { 
-		if (self.amiga() != golondrina)
-		{ self.amiga(golondrina) 
-		game.say(self, "Hola " + golondrina.nombre() + "!")}
-	}
+	
+	method canMove(nuevaPosicion) { return self.energiaHacia(nuevaPosicion) <= energia }
 	
 	method move(nuevaPosicion) {
-		if (self.energiaHacia(nuevaPosicion) <= energia) {
+		if (self.canMove(nuevaPosicion)) {
 		energia -= self.energiaHacia(nuevaPosicion)
 		self.position(nuevaPosicion) 
-		} else {game.say(self, "dame de comer, loco!")}
-	}	
+		}
+	}
+	
+	method agarrarItem(iten) {}	
 }
 
 object pepona {
@@ -67,9 +67,9 @@ object roque {
 	
 	method image() = "jugador.png"
 	method nombre() { return "Roque" }
-	method agarrarComida(comida) {
+	method agarrarItem(item) {
 		if (miniMochila != vacio) { self.vaciarMochila()}
-			self.cargarMochila(comida) 			
+			self.cargarMochila(item) 			
 	}
 	
 	method darComida(ave) {
@@ -94,6 +94,7 @@ object roque {
 		}
 	}
 	
+	method openBag() { return miniMochila }
 	//Esta para conservar polimorfismo en game Pipa y Pepona collision.
 	method saludarAmiga(amiga) {}
 	method move(nuevaPosicion) {
